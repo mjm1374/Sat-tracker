@@ -22,21 +22,24 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
      
     }
     
-  findSatelinte(25544 );
+  
     
-    function findSatelinte(id) {
-        ///Request: tle/{id}
+    function findSatTLE(id) {
+    ///Request: tle/{id}
       let data = "apiKey=" +  apiKey; 
         
-        $.ajax({
+      let theJson =  $.ajax({
             url: satURL + "tle/" + id ,
             data: data,
             success: function (data) {
                 console.log(data);
+                return (data);
               },
             dataType: 'json'
           });
-        
+            
+            
+        return JSON.stringify(theJson);
         
     }
     

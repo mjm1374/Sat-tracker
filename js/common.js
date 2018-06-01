@@ -3,14 +3,28 @@ const GMAP = "AIzaSyDpn5_1gAS4SJOuzvkeMZK22yOlvZY2kKE";
 const satURL = "https://www.n2yo.com/rest/v1/satellite/"
     
     // Constructor function for Satelite objects
-    function Satelite( id, satname,intDesignator,satlat,satlng, satalt) {
+    //function Satelite( id, satname,intDesignator,launchDate,satlat,satlng, satalt) {
+    //    this.id = id;
+    //    this.satname = satname;
+    //    this.intDesignator = intDesignator;
+    //    this.launchDate = launchDate;
+    //    this.satlat = satlat;
+    //    this.satlng = satlng;
+    //    this.satalt = satalt;
+    //    
+    //    this.changeName = function (name) {
+    //        this.satname = name;
+    //    }; 
+    //    this.SatDesignation = function () {
+    //      return this.satname + " (" + this.id + ")";
+    //      
+    //    };
+    // 
+    //}
+        function Satelite( id, satname) {
         this.id = id;
         this.satname = satname;
-        this.intDesignator = intDesignator;
-        this.launchDate = launchDate;
-        this.satlat = satlat;
-        this.satlng = satlng;
-        this.satalt = satalt;
+      
         
         this.changeName = function (name) {
             this.satname = name;
@@ -33,13 +47,14 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
             data: data,
             success: function (data) {
                 console.log(data);
-                return (data);
+                console.log(data.info.satname);
+                return (Satelite(data.info.satid,data.info.satname));
               },
             dataType: 'json'
           });
             
             
-        return JSON.stringify(theJson);
+        return theJson;
         
     }
     

@@ -24,7 +24,7 @@
 
     <nav></nav>
     
-    
+    <div id="databox"></div>
     
     
     
@@ -37,7 +37,18 @@
     
     <script>
         $(document).ready(function() {
-            alert(findSatTLE(25544));
+            //var mySat = JSON.parse(findSatTLE(25544));
+            //setTimeout(function(){ alert(mySat.satname); }, 3000);
+            
+            $(function(){
+                findSatTLE(25544).done(function(json) {
+                    // do something with json
+                    //alert(json.info.satname);
+                    $('#databox').text('sat: ' + json.info.satname);
+                });
+            
+            });
+           
         });
         
     </script>

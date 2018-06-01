@@ -36,8 +36,19 @@
     <input class="searchbox" type="text" name="searchLat" id="searchLat" value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
     <label for="searchLng">Lng:
     <input class="searchbox" type="text" name="searchLng" id="searchLng" value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
-    <label for="searchRad">Radius:
-    <input class="searchbox" type="text" name="searchRad" id="searchRad" value="500" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
+    <label for="searchRad">Degree of view:
+    <select class="searchbox" name="searchRad" id="searchRad">
+      <option value="90">90</option>
+      <option value="80">80</option>
+      <option value="70">70</option>
+      <option value="60">60</option>
+      <option value="50">50</option>
+      <option value="40">40</option>
+      <option value="30">30</option>
+      <option value="20">20</option>
+      <option value="10">10</option>      
+    </select>
+    </label><br />
     <button onclick="findSatAbove();" id="searchAbove" disabled=true>Search</button>
     
     <p>
@@ -61,8 +72,7 @@
             //setTimeout(function(){ alert(mySat.satname); }, 3000);
             var local = getLocation();
             
-            initMap();
-          
+           
             
             $(function(){
                 findSatTLE(25544).done(function(json) {

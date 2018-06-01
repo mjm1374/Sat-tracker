@@ -156,7 +156,13 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                  //var obj = JSON.parse(data);
                 console.log("findSatAbove: " + data.info.satcount);
                 //console.log("findSatAbove: " + data.above[0].satname);
+                
+                //call the map  
+                initMap(sLat.value ,sLng.value );
+                
                 SatList = [];
+                var infowindow = new google.maps.InfoWindow();
+                var marker  = [];
                 let writer = ""; //creates the temp interface
                 for (var key in data.above)
                 {
@@ -172,7 +178,20 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                                               data.above[key].satlat,
                                               data.above[key].satlng,
                                               data.above[key].satalt
-                                              )); 
+                                              ));
+                         
+                        marker = new google.maps.Marker({
+                            position: {lat: parseFloat(data.above[key].satlat), lng: parseFloat(data.above[key].satlng)},
+                            map: map,
+                            icon: './img/icons8-satellite-50.png',
+                            title: data.above[key].satname
+                        });
+                        google.maps.event.addListener(marker, 'click', (function(marker, key) {
+                        return function() {
+                          infowindow.setContent(data.above[key].satname);
+                          infowindow.open(map, marker);
+                        }
+                        })(marker,key));
                    }
                 }
                 
@@ -249,6 +268,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         
         sLat.value = position.coords.latitude;
         sLng.value = position.coords.longitude;
+        initMap(currentLat ,currentLng ); // init gmap
         sButton.disabled = false;
         
         return setLocation(currentLat,currentLng,currentAlt);
@@ -271,7 +291,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         console.log('map ' + newLat + "/" + newLng);
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: parseFloat(newLat), lng: parseFloat(newLng)},
-          zoom: 8
+          zoom: 5
         });
       }
         

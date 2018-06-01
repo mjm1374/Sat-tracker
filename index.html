@@ -32,10 +32,12 @@
     <p id="local"></p>
 
     <p>Fins satelites above you.</p>
-    
-    <input class="searchbox" type="text" name="searchLat" id="searchLat" value="" size="40" maxlength="40"  min="" max="" accept=""/><br />
-    <input class="searchbox" type="text" name="searchLng" id="searchLng" value="" size="40" maxlength="40"  min="" max="" accept=""/><br />
-    <input class="searchbox" type="text" name="searchRad" id="searchRad" value="500" size="40" maxlength="40"  min="" max="" accept=""/><br />
+    <label for="searchLat">Lat:
+    <input class="searchbox" type="text" name="searchLat" id="searchLat" value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
+    <label for="searchLng">Lng:
+    <input class="searchbox" type="text" name="searchLng" id="searchLng" value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
+    <label for="searchRad">Radius:
+    <input class="searchbox" type="text" name="searchRad" id="searchRad" value="500" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
     <button onclick="findSatAbove();" id="searchAbove" disabled=true>Search</button>
     
     <footer></footer>

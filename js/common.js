@@ -8,7 +8,7 @@
 
 const apiKey = "6MVMLK-EJ3FXU-BTVB3F-3TNQ";
 const GMAP = "AIzaSyDpn5_1gAS4SJOuzvkeMZK22yOlvZY2kKE";
-const satURL = "https://www.n2yo.com/rest/v1/satellite/"
+const satURL = "https://www.n2yo.com/rest/v1/satellite/";
 
 
     var x = document.getElementById("local");
@@ -16,10 +16,11 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
     var sLng = document.getElementById("searchLng");
     var sRad = document.getElementById("searchRad");
     var sButton = document.getElementById("searchAbove");
+    let SatList = [];
     
      //Constructor function for Satelite objects
     function Satelite( id, satname,intDesignator = "",launchDate = "" ,satlat = "",satlng = "", satalt = "") {
-        this.id = id;
+        this.satid = id;
         this.satname = satname;
         this.intDesignator = intDesignator;
         this.launchDate = launchDate;
@@ -143,7 +144,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
         
         // Request: /above/{observer_lat}/{observer_lng}/{observer_alt}/{search_radius}/{category_id}
         
-        let SatList = [];
+        
         
         let data = "apiKey=" +  apiKey; 
         
@@ -154,15 +155,15 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
                 
                  //var obj = JSON.parse(data);
                 console.log("findSatAbove: " + data.info.satcount);
-                console.log("findSatAbove: " + data.above[0].satname);
-                
-                let tempWriter = ""; //testing data output
+                //console.log("findSatAbove: " + data.above[0].satname);
+                SatList = [];
+                let writer = ""; //creates the temp interface
                 for (var key in data.above)
                 {
                    if (data.above.hasOwnProperty(key))
                    {
                       // here you have access to
-                        tempWriter = tempWriter +  data.above[key].satname + "<br/>";
+                        writer = writer +  "<a href='javascript:satDetail(" + data.above[key].satid +  ");'>" + data.above[key].satname + "</a><br/>";
                         SatList.push(new Satelite(
                                               data.above[key].satid,
                                               data.above[key].satname,
@@ -171,33 +172,54 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
                                               data.above[key].satlat,
                                               data.above[key].satlng,
                                               data.above[key].satalt
-                                              ));
-                      //var MGR_ID = result[key].MGR_ID;
+                                              )); 
                    }
                 }
                 
                 //Loop throught he object and create interface
                 
                  
-                var arrayLength = SatList.length;
-                for (var i = 0; i < arrayLength; i++) {
-                    console.log(SatList[i].satname);
-                    //Do something
-                }
+                //var arrayLength = SatList.length;
+                //for (var i = 0; i < arrayLength; i++) {
+                //    //console.log(SatList[i].satname);
+                //    //Do something
+                //}
                                 
-                document.getElementById("dataAbovebox").innerHTML = SatList.length;
-                return (SatList);
+                document.getElementById("dataAbovebox").innerHTML = writer;
+                //return (SatList);
               },
             dataType: 'json'
           });
             
             
-        return theJson;
+        return (SatList);
         
         
         
     }
     
+    
+    /* Get the Satelite detail on click
+     *  
+     * TODO: Do somethihg with the satelite details, currently just alerts the name & ID
+     */
+    function satDetail(searchsatid){
+        
+        var resultObject = findObjectByKey(SatList,'satid',searchsatid);
+        console.log(resultObject);
+        alert(resultObject.satname + "(" + resultObject.intDesignator + ")");
+    }
+
+    // look through and array of object and do match on obj value
+    function findObjectByKey(array, key, value) {
+        for (var i = 0; i < array.length; i++) {
+            console.log(array[i][key]);
+            if (array[i][key] === value) {
+                return array[i];
+            }
+        }
+        return null;
+    }
     
     /* Set up for localization
      *

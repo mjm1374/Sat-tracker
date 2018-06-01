@@ -143,6 +143,8 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
         
         // Request: /above/{observer_lat}/{observer_lng}/{observer_alt}/{search_radius}/{category_id}
         
+        let SatList = [];
+        
         let data = "apiKey=" +  apiKey; 
         
         let theJson =  $.ajax({
@@ -150,12 +152,41 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
             data: data,
             success: function (data) {
                 
-                console.log("https://www.n2yo.com/rest/v1/satellite/above/41.702/-76.014/0/700/18/");
-                console.log(satURL + "above/" + id + "/" + sLat.value + "/" + sLng.value + "/0/" + sRad.value + "/18");
-                //var obj = JSON.parse(data);
+                 //var obj = JSON.parse(data);
                 console.log("findSatAbove: " + data.info.satcount);
-                //console.log(data.info.satname);
-                //return (Satelite(data.info.satid,data.info.satname));
+                console.log("findSatAbove: " + data.above[0].satname);
+                
+                let tempWriter = ""; //testing data output
+                for (var key in data.above)
+                {
+                   if (data.above.hasOwnProperty(key))
+                   {
+                      // here you have access to
+                        tempWriter = tempWriter +  data.above[key].satname + "<br/>";
+                        SatList.push(new Satelite(
+                                              data.above[key].satid,
+                                              data.above[key].satname,
+                                              data.above[key].intDesignator,
+                                              data.above[key].launchDate,
+                                              data.above[key].satlat,
+                                              data.above[key].satlng,
+                                              data.above[key].satalt
+                                              ));
+                      //var MGR_ID = result[key].MGR_ID;
+                   }
+                }
+                
+                //Loop throught he object and create interface
+                
+                 
+                var arrayLength = SatList.length;
+                for (var i = 0; i < arrayLength; i++) {
+                    console.log(SatList[i].satname);
+                    //Do something
+                }
+                                
+                document.getElementById("dataAbovebox").innerHTML = SatList.length;
+                return (SatList);
               },
             dataType: 'json'
           });

@@ -27,6 +27,11 @@
     <div id="databox"></div>
     
     
+    <p>Your current coordinates.</p>
+
+    <p id="local"></p>
+
+    
     
     <footer></footer>
     
@@ -39,6 +44,7 @@
         $(document).ready(function() {
             //var mySat = JSON.parse(findSatTLE(25544));
             //setTimeout(function(){ alert(mySat.satname); }, 3000);
+            var local = getLocation();
             
             $(function(){
                 findSatTLE(25544).done(function(json) {

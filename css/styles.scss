@@ -4,4 +4,16 @@ $primary-color: #333;
 body {
   font: 100% $font-stack;
   color: $primary-color;
-} 
+  margin:10px;
+}
+
+p {
+  margin-top:10px;
+}
+
+#local{
+  padding: 10px;
+  border: 1px solid black;
+  min-width: 100px;
+  display: inline-block;
+}

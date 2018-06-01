@@ -52,6 +52,9 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
     }
     
     var x = document.getElementById("local");
+    var sLat = document.getElementById("searchLat");
+    var sLng = document.getElementById("searchLng");
+    var sButton = document.getElementById("searchAbove");
 
     function getLocation() {
         if (navigator.geolocation) {
@@ -67,6 +70,12 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
         currentAlt = position.coords.altitude;
         console.log(currentLat, currentLng, currentAlt);
         x.innerHTML =  "Lat: " + currentLat + "<br/>Lng: " + currentLng + "<br/>Alt: " + currentAlt;
+        
+        sLat.value = position.coords.latitude;
+        sLng.value = position.coords.longitude;
+        sButton.disabled = false;
+        
         return setLocation(currentLat,currentLng,currentAlt);
+        
     }
         

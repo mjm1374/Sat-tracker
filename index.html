@@ -24,12 +24,12 @@
 
     <nav></nav>
     
-    <div id="databox"></div>
+    <div id="databox" class="TestDataDisplay"></div>
     
     
     <p>Your current coordinates.</p>
 
-    <p id="local"></p>
+    <p id="local" class="TestDataDisplay"></p>
 
     <p>Fins satelites above you.</p>
     <label for="searchLat">Lat:
@@ -39,6 +39,11 @@
     <label for="searchRad">Radius:
     <input class="searchbox" type="text" name="searchRad" id="searchRad" value="500" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
     <button onclick="findSatAbove();" id="searchAbove" disabled=true>Search</button>
+    
+    <p>
+    <div id="dataAbovebox" class="TestDataDisplay"></div>
+    </p>
+    
     
     <footer></footer>
     

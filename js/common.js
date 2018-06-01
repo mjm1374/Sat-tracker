@@ -83,7 +83,10 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
         
     }
     
-    
+    /* TODO: Work out category system
+     *
+     */
+     
     function findSatAbove(){
         console.log(sLat.value);
         
@@ -143,10 +146,14 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/"
         let data = "apiKey=" +  apiKey; 
         
         let theJson =  $.ajax({
-            url: satURL + "above/" + id + "/" + sLat.value + "/" + sLng.value + "/0/" + sRad.value + "/18",
+            url: satURL + "above/" + sLat.value + "/" + sLng.value + "/0/" + sRad.value + "/18/",
             data: data,
             success: function (data) {
-                console.log("findSatAbove: " + data);
+                
+                console.log("https://www.n2yo.com/rest/v1/satellite/above/41.702/-76.014/0/700/18/");
+                console.log(satURL + "above/" + id + "/" + sLat.value + "/" + sLng.value + "/0/" + sRad.value + "/18");
+                //var obj = JSON.parse(data);
+                console.log("findSatAbove: " + data.info.satcount);
                 //console.log(data.info.satname);
                 //return (Satelite(data.info.satid,data.info.satname));
               },

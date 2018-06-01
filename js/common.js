@@ -190,8 +190,9 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
               },
             dataType: 'json'
           });
-            
-            
+          //call the map  
+          initMap(sLat.value ,sLng.value );
+             
         return (SatList);
         
         
@@ -207,7 +208,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         
         var resultObject = findObjectByKey(SatList,'satid',searchsatid);
         console.log(resultObject);
-        alert(resultObject.satname + "(" + resultObject.intDesignator + ")");
+        alert(resultObject.satname + " (" + resultObject.intDesignator + ")");
     }
 
     // look through and array of object and do match on obj value
@@ -253,4 +254,24 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         return setLocation(currentLat,currentLng,currentAlt);
         
     }
+    
+    
+    
+    /* GMAP
+     *
+     *
+     *
+     *
+     *
+     */
+    
+    
+    var map;
+      function initMap(newLat, newLng) {
+        console.log('map ' + newLat + "/" + newLng);
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: parseFloat(newLat), lng: parseFloat(newLng)},
+          zoom: 8
+        });
+      }
         

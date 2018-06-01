@@ -23,7 +23,7 @@
 <body>
 
     <nav></nav>
-    
+    <div class="map" id="map"></div>
     <div id="databox" class="TestDataDisplay"></div>
     
     
@@ -31,7 +31,7 @@
 
     <p id="local" class="TestDataDisplay"></p>
 
-    <p>Fins satelites above you.</p>
+    <p>Find satelites above you.</p>
     <label for="searchLat">Lat:
     <input class="searchbox" type="text" name="searchLat" id="searchLat" value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
     <label for="searchLng">Lng:
@@ -41,7 +41,6 @@
     <button onclick="findSatAbove();" id="searchAbove" disabled=true>Search</button>
     
     <p>
-      <a href="javascript:satDetail(1)">Test</a><br/>
     <div id="dataAbovebox" class="TestDataDisplay"></div>
     </p>
     
@@ -53,11 +52,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="js/common.js"></script>
     
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpn5_1gAS4SJOuzvkeMZK22yOlvZY2kKE&callback=initMap"
+    async defer></script>
+    
     <script>
         $(document).ready(function() {
             //var mySat = JSON.parse(findSatTLE(25544));
             //setTimeout(function(){ alert(mySat.satname); }, 3000);
             var local = getLocation();
+            
+            initMap();
           
             
             $(function(){
@@ -68,6 +72,9 @@
                 });
             
             });
+            
+            
+             
            
         });
         

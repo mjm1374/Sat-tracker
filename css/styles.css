@@ -11,3 +11,14 @@ p {
   border: 1px solid black;
   min-width: 100px;
   display: inline-block; }
+
+#dataAbovebox {
+  height: 200px;
+  overflow-y: scroll; }
+
+#map {
+  float: right;
+  width: 40%;
+  height: 500px;
+  display: inline-block;
+  border: 1px solid red; }

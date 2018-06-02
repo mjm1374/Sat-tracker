@@ -234,7 +234,10 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         
         var resultObject = findObjectByKey(SatList,'satid',searchsatid);
         console.log(resultObject);
-        alert(resultObject.satname + " (" + resultObject.intDesignator + ")");
+        //alert(resultObject.satname + " (" + resultObject.intDesignator + ")");
+        
+        map.setCenter({lat: parseFloat(resultObject.satlat), lng: parseFloat(resultObject.satlng)});
+         $('#databox').text('sat: ' + resultObject.satname);
     }
 
     // look through and array of object and do match on obj value

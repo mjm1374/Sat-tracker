@@ -16,6 +16,8 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     var sLng = document.getElementById("searchLng");
     var sRad = document.getElementById("searchRad");
     var sButton = document.getElementById("searchAbove");
+    var e = document.getElementById("searchtype");
+    var sType = e.options[e.selectedIndex].value;
     let SatList = [];
     
      //Constructor function for Satelite objects
@@ -88,68 +90,14 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
      *
      */
      
-    function findSatAbove(){
-        console.log(sLat.value);
-        
-        // Category     ID
-		//Amateur radio	18
-		//Beidou Navigation System	35
-		//Brightest	1
-		//Celestis	45
-		//CubeSats	32
-		//Disaster monitoring	8
-		//Earth resources	6
-		//Education	29
-		//Engineering	28
-		//Experimental	19
-		//Flock	48
-		//Galileo	22
-		//Geodetic	27
-		//Geostationary	10
-		//Global Positioning System (GPS)	20
-		//Globalstar	17
-		//Glonass Operational	21
-		//GOES	5
-		//Gonets	40
-		//Gorizont	12
-		//Intelsat	11
-		//Iridium	15
-		//IRNSS	46
-		//ISS	2
-		//Lemur	49
-		//Military	30
-		//Molniya	14
-		//Navy Navigation Satellite System	24
-		//NOAA	4
-		//O3B Networks	43
-		//Orbcomm	16
-		//Parus	38
-		//QZSS	47
-		//Radar Calibration	31
-		//Raduga	13
-		//Russian LEO Navigation	25
-		//Satellite-Based Augmentation System	23
-		//Search & rescue	7
-		//Space & Earth Science	26
-		//Strela	39
-		//Tracking and Data Relay Satellite System	9
-		//Tselina	44
-		//Tsikada	42
-		//Tsiklon	41
-		//TV	34
-		//Weather	3
-		//Westford Needles	37
-		//XM and Sirius	33
-		//Yaogan	36
-        
+    function findSatAbove(){        
         // Request: /above/{observer_lat}/{observer_lng}/{observer_alt}/{search_radius}/{category_id}
-        
-        
-        
+        sType = e.options[e.selectedIndex].value;
+    console.log("sType" + sType);
         let data = "apiKey=" +  apiKey; 
         
         let theJson =  $.ajax({
-            url: satURL + "above/" + sLat.value + "/" + sLng.value + "/0/" + sRad.value + "/18/",
+            url: satURL + "above/" + sLat.value + "/" + sLng.value + "/0/" + sRad.value + "/" + sType + "/",
             data: data,
             success: function (data) {
                 
@@ -163,13 +111,14 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                 SatList = [];
                 var infowindow = new google.maps.InfoWindow();
                 var marker  = [];
+                var markers = [];
                 let writer = ""; //creates the temp interface
                 for (var key in data.above)
                 {
                    if (data.above.hasOwnProperty(key))
                    {
                       // here you have access to
-                        writer = writer +  "<a href='javascript:satDetail(" + data.above[key].satid +  ");'>" + data.above[key].satname + "</a><br/>";
+                        writer = writer +  "<a class='markerClick' data-markerid='" + key + "' href='javascript:satDetail(" + data.above[key].satid +  "," + key + ");'>" + data.above[key].satname + "</a><br/>";
                         SatList.push(new Satelite(
                                               data.above[key].satid,
                                               data.above[key].satname,
@@ -181,12 +130,14 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                                               ));
                          
                         marker = new google.maps.Marker({
+                            record_id: data.above[key].satid,
                             position: {lat: parseFloat(data.above[key].satlat), lng: parseFloat(data.above[key].satlng)},
                             map: map,
                             icon: './img/icons8-satellite-50.png',
                             title: data.above[key].satname
                         });
                         google.maps.event.addListener(marker, 'click', (function(marker, key) {
+                             
                         return function() { 
                           infocontent = "<b>" + data.above[key].satname + "</b>" +
                           "<br/>Intl Des: " + data.above[key].intDesignator +
@@ -199,6 +150,16 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                           infowindow.open(map, marker);
                         }
                         })(marker,key));
+                        
+                        // Add marker to markers array
+                         markers.push(marker);
+                          //$('.markerClick').on('click', function () {
+                          //
+                          //      google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
+                          //  });
+                                                 
+                            
+                    
                    }
                 }
                 
@@ -219,31 +180,45 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
           //call the map  
           initMap(sLat.value ,sLng.value );
              
-        return (SatList);
+        return [SatList];
         
         
         
     }
     
     
+    function changeMarker(record_id){
+        var markers = $('#map').attr("data-markers",results.length);
+        
+      
+        //for (i in map.marker){
+        //    if(map.marker[i].record_id == record_id){
+        //        console.log(map.marker[i].record_id );
+        //        map.marker[i].setIcon('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=title|EC2A8C|000000');
+        //        google.maps.event.trigger(map.marker[i], 'click');
+        //    }
+        //}
+    }
+    
     /* Get the Satelite detail on click
      *  
-     * TODO: Do somethihg with the satelite details, currently just alerts the name & ID
+     * TODO: Open the marker when selected
      */
-    function satDetail(searchsatid){
-        
+    function satDetail(searchsatid, key){
+        //console.log("marker length: " + markers.length);
         var resultObject = findObjectByKey(SatList,'satid',searchsatid);
-        console.log(resultObject);
-        //alert(resultObject.satname + " (" + resultObject.intDesignator + ")");
-        
+        //console.log(resultObject);
         map.setCenter({lat: parseFloat(resultObject.satlat), lng: parseFloat(resultObject.satlng)});
-         $('#databox').text('sat: ' + resultObject.satname);
+       // google.maps.event.trigger(map.marker, 'click');
+        //changeMarker(resultObject.satid);
+        //google.maps.event.trigger(map.markers.marker[key], 'click');
+         $('#databox').text('Satellite: ' + resultObject.satname);
     }
 
     // look through and array of object and do match on obj value
     function findObjectByKey(array, key, value) {
         for (var i = 0; i < array.length; i++) {
-            console.log(array[i][key]);
+            //console.log(array[i][key]);
             if (array[i][key] === value) {
                 return array[i];
             }
@@ -280,6 +255,8 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         sLng.value = position.coords.longitude;
         initMap(currentLat ,currentLng ); // init gmap
         sButton.disabled = false;
+        
+        findSatAbove();
         
         return setLocation(currentLat,currentLng,currentAlt);
         

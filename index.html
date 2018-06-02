@@ -53,7 +53,7 @@
         <input class="searchbox" type="text" name="searchLng" id="searchLng" value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
         
         <label for="searchtype">Satellite type:
-        <select class="searchbox" name="searchtype" id="searchtype">
+        <select class="searchbox" name="searchtype" id="searchtype" >
           <option value="18">Amateur radio</option>
           <option value="35">Beidou Navigation System</option>
           <option value="1">Brightest</option>
@@ -77,7 +77,7 @@
           <option value="11">Intelsat</option>
           <option value="15">Iridium</option>
           <option value="46">IRNSS</option>
-          <option value="2">ISS</option>
+          <option value="2" selected>ISS</option>
           <option value="49">Lemur</option>
           <option value="30">Military</option>
           <option value="14">Molniya</option>
@@ -118,14 +118,15 @@
         </select>
         </label><br />
         
-        <button onclick="findSatAbove();" id="searchAbove" disabled=true>Search</button><br />
+        <button onclick="findSatAbove();" id="searchAbove" class="searchbtn" disabled=true>Search</button><br />
         
-        <button onclick="getLocation();" id="resetAbove">Recenter over me</button>
+        <button onclick="getLocation();" id="resetAbove" class="recenter">Recenter over me</button>
       </div>
       
       <div class="flexer sidebar">
         <div id="databox" class="TestDataDisplay"></div>
         <div id="dataAbovebox" class="TestDataDisplay"></div>
+        <div id="satCnt" class="TestDataDisplay"></div>
          
       </div>
     </div>
@@ -151,7 +152,7 @@
                 findSatTLE(25544).done(function(json) {
                     // do something with json
                     //alert(json.info.satname);
-                    $('#databox').text('sat: ' + json.info.satname);
+                    $('#databox').text('Satellite: ' + json.info.satname);
                 });
             
             });

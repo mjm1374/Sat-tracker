@@ -17,7 +17,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     var sRad = document.getElementById("searchRad");
     var sButton = document.getElementById("searchAbove");
     var e = document.getElementById("searchtype");
-    var sType = e.options[e.selectedIndex].value;
+    //var sType = e.options[e.selectedIndex].value;
     let SatList = [];
     
      //Constructor function for Satelite objects
@@ -86,14 +86,18 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         
     }
     
-    /* TODO: Work out category system
+    
+    
+    /* TODO: catch errors o blank inputs and bad json
      *
      */
      
     function findSatAbove(){        
         // Request: /above/{observer_lat}/{observer_lng}/{observer_alt}/{search_radius}/{category_id}
+        //sType = document.getElementById("searchtype").value;  
         sType = e.options[e.selectedIndex].value;
-    console.log("sType" + sType);
+        console.log("sType: " + sType);
+    
         let data = "apiKey=" +  apiKey; 
         
         let theJson =  $.ajax({
@@ -104,7 +108,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                  //var obj = JSON.parse(data);
                 console.log("findSatAbove: " + data.info.satcount);
                 //console.log("findSatAbove: " + data.above[0].satname);
-                
+                $("#satCnt").text("Sat Count: " + data.info.satcount);
                 //call the map  
                 initMap(sLat.value ,sLng.value );
                 

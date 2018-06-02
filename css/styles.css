@@ -1,9 +1,32 @@
 body {
   font: 100% Helvetica, sans-serif;
   color: #edeeef;
-  margin: 10px;
+  margin: 0px;
   font-size: 1em;
   background-color: #20252d; }
+
+header {
+  background: #545556 url("../img/satellite.png");
+  background-repeat: no-repeat;
+  background-position: 0px 10px;
+  background-attachment: fixed;
+  background-size: 100px 100px;
+  height: 110px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 10px; }
+  header h1 {
+    margin-left: 120px; }
+  header p {
+    font-size: .8em;
+    width: 20%;
+    float: right;
+    margin-top: -50px;
+    margin-right: 20px; }
+
+.headerh1 {
+  padding-top: 10px; }
 
 p {
   margin-top: 10px; }

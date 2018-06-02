@@ -9,7 +9,7 @@ header {
   background: #545556 url("../img/satellite.png");
   background-repeat: no-repeat;
   background-position: 0px 10px;
-  background-attachment: fixed;
+  background-attachment: scroll;
   background-size: 100px 100px;
   height: 110px;
   margin-top: 0px;
@@ -30,6 +30,13 @@ header {
 
 p {
   margin-top: 10px; }
+
+a {
+  color: #dba811; }
+
+a:hover {
+  color: #9e1009;
+  text-decoration: none; }
 
 .TestDataDisplay {
   padding: 10px;
@@ -93,3 +100,8 @@ button {
 .recenter {
   color: #fff;
   background: #42a1f4; }
+
+footer {
+  font-size: .75em;
+  color: #545556;
+  padding: 10px; }

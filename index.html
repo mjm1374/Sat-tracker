@@ -133,7 +133,11 @@
          
       </div>
     </div>
-    <footer></footer>
+    <footer>
+      <p>Copyright &copy; <spam class="copyright"></spam> Mike McAllister.<br />
+      Data by and thanks to <a href="https://www.n2yo.com" target="_blank">N2YO</a>.
+      </p>
+    </footer>
     
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -148,6 +152,9 @@
             //var mySat = JSON.parse(findSatTLE(25544));
             //setTimeout(function(){ alert(mySat.satname); }, 3000);
             var local = getLocation();
+            
+           let year =  (new Date()).getFullYear();
+           $('.copyright').text(year);
             
            
             

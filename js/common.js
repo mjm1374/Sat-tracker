@@ -187,8 +187,15 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                             title: data.above[key].satname
                         });
                         google.maps.event.addListener(marker, 'click', (function(marker, key) {
-                        return function() {
-                          infowindow.setContent(data.above[key].satname);
+                        return function() { 
+                          infocontent = "<b>" + data.above[key].satname + "</b>" +
+                          "<br/>Intl Des: " + data.above[key].intDesignator +
+                          "<br/>Launched: " + formatDate(data.above[key].launchDate) +
+                          "<br/>Lat: " + data.above[key].satlat +
+                          "<br/>Lng: " + data.above[key].satlng +
+                          "<br/>Alt: " + data.above[key].satalt + "km"
+                          ;
+                          infowindow.setContent(infocontent);
                           infowindow.open(map, marker);
                         }
                         })(marker,key));
@@ -294,4 +301,13 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
           zoom: 5
         });
       }
+      
+      function formatDate(thisDate){
+        var year = thisDate.substr(0, 4);
+        var mon = thisDate.substr(5, 2);
+        var day = thisDate.substr(8, 2);
+        let newDate = mon + "/" + day + "/" + year;
+        return newDate;
         
+        
+      }

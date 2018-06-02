@@ -86,106 +86,143 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         
     }
     
-    
-    
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+      }
+      
+    function isLatitude(lat) {
+        return isFinite(lat) && Math.abs(lat) <= 90;
+      }
+      
+      function isLongitude(lng) {
+        return isFinite(lng) && Math.abs(lng) <= 180;
+      }
     /* TODO: catch errors o blank inputs and bad json
      *
      */
      
     function findSatAbove(){        
         // Request: /above/{observer_lat}/{observer_lng}/{observer_alt}/{search_radius}/{category_id}
-        //sType = document.getElementById("searchtype").value;  
-        sType = e.options[e.selectedIndex].value;
-        console.log("sType: " + sType);
-    
-        let data = "apiKey=" +  apiKey; 
+        //sType = document.getElementById("searchtype").value;
+        $(".errorDisplay").css("display","none");
+       
+        let sType = e.options[e.selectedIndex].value;
+        let errmsg = ""; 
+
+        //Check for errors
+        testLatint  = isNumber(sLat.value);
+        testLngint  = isNumber(sLng.value);
+        testLat  = isLatitude(parseFloat(sLat.value));
+        testLng  = isLatitude(parseFloat(sLat.value));
         
-        let theJson =  $.ajax({
-            url: satURL + "above/" + sLat.value + "/" + sLng.value + "/0/" + sRad.value + "/" + sType + "/",
-            data: data,
-            success: function (data) {
-                
-                 //var obj = JSON.parse(data);
-                console.log("findSatAbove: " + data.info.satcount);
-                //console.log("findSatAbove: " + data.above[0].satname);
-                $("#satCnt").text("Sat Count: " + data.info.satcount);
-                //call the map  
-                initMap(sLat.value ,sLng.value );
-                
-                SatList = [];
-                var infowindow = new google.maps.InfoWindow();
-                var marker  = [];
-                var markers = [];
-                let writer = ""; //creates the temp interface
-                for (var key in data.above)
-                {
-                   if (data.above.hasOwnProperty(key))
-                   {
-                      // here you have access to
-                        writer = writer +  "<a class='markerClick' data-markerid='" + key + "' href='javascript:satDetail(" + data.above[key].satid +  "," + key + ");'>" + data.above[key].satname + "</a><br/>";
-                        SatList.push(new Satelite(
-                                              data.above[key].satid,
-                                              data.above[key].satname,
-                                              data.above[key].intDesignator,
-                                              data.above[key].launchDate,
-                                              data.above[key].satlat,
-                                              data.above[key].satlng,
-                                              data.above[key].satalt
-                                              ));
-                         
-                        marker = new google.maps.Marker({
-                            record_id: data.above[key].satid,
-                            position: {lat: parseFloat(data.above[key].satlat), lng: parseFloat(data.above[key].satlng)},
-                            map: map,
-                            icon: './img/icons8-satellite-50.png',
-                            title: data.above[key].satname
-                        });
-                        google.maps.event.addListener(marker, 'click', (function(marker, key) {
-                             
-                        return function() { 
-                          infocontent = "<b>" + data.above[key].satname + "</b>" +
-                          "<br/>Intl Des: " + data.above[key].intDesignator +
-                          "<br/>Launched: " + formatDate(data.above[key].launchDate) +
-                          "<br/>Lat: " + data.above[key].satlat +
-                          "<br/>Lng: " + data.above[key].satlng +
-                          "<br/>Alt: " + data.above[key].satalt + "km"
-                          ;
-                          infowindow.setContent(infocontent);
-                          infowindow.open(map, marker);
-                        }
-                        })(marker,key));
-                        
-                        // Add marker to markers array
-                         markers.push(marker);
-                          //$('.markerClick').on('click', function () {
-                          //
-                          //      google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
-                          //  });
-                                                 
-                            
+        console.log(isLatitude(parseFloat(sLat.value)));
+        
+        if(testLatint == false ) {errmsg = errmsg + "Lat must be a number <br />";}
+        if(testLngint == false ) {errmsg = errmsg + "Lng must be a number <br />";}
+        if(testLat == false ) {errmsg = errmsg + "Lat must be a value between -90 &amp; 90 <br />";}
+        if(testLng == false ) {errmsg = errmsg + "Lng must be a  value between -180 &amp; 180 <br />";}
+        
+        console.log("errmsg: " + errmsg  + sLng.value + "/" + testLat);
+        
+        if (errmsg != ""){
+            //lets send the erro messages
+            $(".errorDisplay").css("display","inline-block");
+            $(".errormsg").html(errmsg);
+            
+            
+        }
+        else
+        {
+            
+        //Lets get some data
+        
+            let data = "apiKey=" +  apiKey; 
+            
+            let theJson =  $.ajax({
+                url: satURL + "above/" + sLat.value + "/" + sLng.value + "/0/" + sRad.value + "/" + sType + "/",
+                data: data,
+                success: function (data) {
                     
-                   }
-                }
-                
-                //Loop throught he object and create interface
-                
-                 
-                //var arrayLength = SatList.length;
-                //for (var i = 0; i < arrayLength; i++) {
-                //    //console.log(SatList[i].satname);
-                //    //Do something
-                //}
+                     //var obj = JSON.parse(data);
+                    
+                    $("#satCnt").text("Sat Count: " + data.info.satcount);
+                    //call the map  
+                    initMap(sLat.value ,sLng.value );
+                    
+                    SatList = [];
+                    var infowindow = new google.maps.InfoWindow();
+                    var marker  = [];
+                    var markers = [];
+                    let writer = ""; //creates the temp interface
+                    for (var key in data.above)
+                    {
+                       if (data.above.hasOwnProperty(key))
+                       {
+                          // here you have access to
+                            writer = writer +  "<a class='markerClick' data-markerid='" + key + "' href='javascript:satDetail(" + data.above[key].satid +  "," + key + ");'>" + data.above[key].satname + "</a><br/>";
+                            SatList.push(new Satelite(
+                                                  data.above[key].satid,
+                                                  data.above[key].satname,
+                                                  data.above[key].intDesignator,
+                                                  data.above[key].launchDate,
+                                                  data.above[key].satlat,
+                                                  data.above[key].satlng,
+                                                  data.above[key].satalt
+                                                  ));
+                             
+                            marker = new google.maps.Marker({
+                                record_id: data.above[key].satid,
+                                position: {lat: parseFloat(data.above[key].satlat), lng: parseFloat(data.above[key].satlng)},
+                                map: map,
+                                icon: './img/icons8-satellite-50.png',
+                                title: data.above[key].satname
+                            });
+                            google.maps.event.addListener(marker, 'click', (function(marker, key) {
+                                 
+                            return function() { 
+                              infocontent = "<b>" + data.above[key].satname + "</b>" +
+                              "<br/>Intl Des: " + data.above[key].intDesignator +
+                              "<br/>Launched: " + formatDate(data.above[key].launchDate) +
+                              "<br/>Lat: " + data.above[key].satlat +
+                              "<br/>Lng: " + data.above[key].satlng +
+                              "<br/>Alt: " + data.above[key].satalt + "km"
+                              ;
+                              infowindow.setContent(infocontent);
+                              infowindow.open(map, marker);
+                            }
+                            })(marker,key));
+                            
+                            // Add marker to markers array
+                             markers.push(marker);
+                              //$('.markerClick').on('click', function () {
+                              //
+                              //      google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
+                              //  });
+                                                     
                                 
-                document.getElementById("dataAbovebox").innerHTML = writer;
-                //return (SatList);
-              },
-            dataType: 'json'
-          });
-          //call the map  
-          initMap(sLat.value ,sLng.value );
-             
-        return [SatList];
-        
+                        
+                       }
+                    }
+                    
+                    //Loop throught he object and create interface
+                    
+                     
+                    //var arrayLength = SatList.length;
+                    //for (var i = 0; i < arrayLength; i++) {
+                    //    //console.log(SatList[i].satname);
+                    //    //Do something
+                    //}
+                                    
+                    document.getElementById("dataAbovebox").innerHTML = writer;
+                    //return (SatList);
+                  },
+                dataType: 'json'
+              });
+              //call the map  
+              initMap(sLat.value ,sLng.value );
+                 
+            return [SatList];
+         }
         
         
     }

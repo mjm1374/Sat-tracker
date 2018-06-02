@@ -7,6 +7,7 @@ $dark-green: #1b6d0d;
 $black: #000;
 $white: #fff;
 $lt-blue: #42a1f4;
+$dark-red:#9e1009;
 
 body {
 	font: 100% $font-stack;
@@ -53,7 +54,7 @@ a {
   color:#dba811;
 }
 a:hover {
-  color:#9e1009;
+  color:$dark-red;
   text-decoration: none;
 }
 
@@ -64,6 +65,15 @@ a:hover {
 	display: inline-block;
 	margin-bottom: .5em;
   clear: both;
+}
+
+
+.errorDisplay{
+  padding: 10px;
+	border: 1px solid $dark-red;
+	width: 100%;
+	display: none;
+  font-size: .75em;
 }
 
 #dataAbovebox {

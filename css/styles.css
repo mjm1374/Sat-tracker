@@ -46,6 +46,13 @@ a:hover {
   margin-bottom: .5em;
   clear: both; }
 
+.errorDisplay {
+  padding: 10px;
+  border: 1px solid #9e1009;
+  width: 100%;
+  display: none;
+  font-size: .75em; }
+
 #dataAbovebox {
   height: 200px;
   overflow-y: scroll; }

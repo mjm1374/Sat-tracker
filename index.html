@@ -50,10 +50,10 @@
         <p>Find satelites above you.</p>
         
         <label for="searchLat">Lat:
-        <input class="searchbox" type="text" name="searchLat" id="searchLat" value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
+        <input class="searchbox" type="text" name="searchLat" id="searchLat" data-label="latitude"  value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
         
         <label for="searchLng">Lng:
-        <input class="searchbox" type="text" name="searchLng" id="searchLng" value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
+        <input class="searchbox" type="text" name="searchLng" id="searchLng" data-label="longitude"  value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
         
         <label for="searchtype">Satellite type:
         <select class="searchbox" name="searchtype" id="searchtype" >
@@ -130,6 +130,10 @@
         <div id="databox" class="TestDataDisplay"></div>
         <div id="dataAbovebox" class="TestDataDisplay"></div>
         <div id="satCnt" class="TestDataDisplay"></div>
+        <div id="errorBox" class="errorDisplay">
+          <h6>Error:</h6>
+          <span class="errormsg"></span>
+        </div>
          
       </div>
     </div>

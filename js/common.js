@@ -308,8 +308,9 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         currentLat = position.coords.latitude;
         currentLng = position.coords.longitude;
         currentAlt = position.coords.altitude;
+        if(currentAlt != null){currentAlt = currentAlt.toFixed(6);}
         console.log(currentLat, currentLng, currentAlt);
-        x.innerHTML =  "Your current coordinates: <br />Lat: " + currentLat + "<br/>Lng: " + currentLng + "<br/>Alt: " + currentAlt;
+        x.innerHTML =  "Your current coordinates: <br />Lat: " + currentLat.toFixed(6) + "<br/>Lng: " + currentLng.toFixed(6) + "<br/>Alt: " + currentAlt;
         
         sLat.value = position.coords.latitude;
         sLng.value = position.coords.longitude;
@@ -378,9 +379,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         });
       
       google.maps.event.addListener(marker,'click', function() {
-          if (infowindow) {
-              infowindow.close();
-          }
+         if (infowindow) { infowindow.close();}
           infowindow.open(map, marker);
         });
 

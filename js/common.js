@@ -440,9 +440,14 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
           "<br/>Launched: " + formatDate(thisSat.launchDate) +
           "<br/>Lat: " + thisSat.satlat +
           "<br/>Lng: " + thisSat.satlng +
-          "<br/>Alt: " + thisSat.satalt + "km" +
-          "<br/><a href='javascript:addSatInfo(\x22" + thisSat.intDesignator + "\x22)'>Additonal info</a> "
-          ;
+          "<br/>Alt: " + thisSat.satalt + "km";
+          
+          if(checkaddInfo(thisSat.intDesignator ) == true){
+            
+            infocontent =  infocontent + "<br/><a href='javascript:addSatInfo(\x22" + thisSat.intDesignator + "\x22)'>Additonal info</a> " ;
+          }
+          
+         
       
       var infowindow = new google.maps.InfoWindow({
           content: infocontent
@@ -458,6 +463,22 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
 
 
     }
+    
+    function checkaddInfo(satid){
+       // console.log("UCS: " + SatDataExt[1][ 'Country/Org of UN Registry' ]);
+       //console.log("addInfo: " +  satid);
+       for (var i = 0; i < SatDataExt.length; i++) {
+        
+           //console.log("UCSR: " + SatDataExt[i][ 'COSPAR' ] + " = " + satid);
+            if(SatDataExt[i][ 'COSPAR Number' ] === satid) {
+                
+                 console.log("addInfoResp: " +  i);
+                // showAddDetail(SatDataExt[i]);
+                 return true;
+            }
+        }
+    }
+    
     
     // Sets the map on all markers in the array.
       function setMapOnAll(map) {

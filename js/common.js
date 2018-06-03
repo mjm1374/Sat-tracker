@@ -21,6 +21,12 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     var sRad = document.getElementById("searchRad");
     var sButton = document.getElementById("searchAbove");
     var e = document.getElementById("searchtype");
+    
+    //the loop vars are for cleaning out teh setInterval in AnimSat function.
+    //The double trigger is used to determine if a loop is running and if the loop was just started or ended.
+    var loop = false;
+    var loopstarted = false;
+    
     //var sType = e.options[e.selectedIndex].value;
     let SatList = [];
     let markers = [];
@@ -110,11 +116,15 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         // Request: /above/{observer_lat}/{observer_lng}/{observer_alt}/{search_radius}/{category_id}
         //sType = document.getElementById("searchtype").value;
         $(".errorDisplay").css("display","none");
-        
+        loop = false;
+         console.log("satLoop: " + typeof satLoop);
+         
+         
         if(typeof satLoop !== 'undefined'){
+           
            clearInterval(satLoop);
         }
-       
+         
         let sType = e.options[e.selectedIndex].value;
         let errmsg = ""; 
 
@@ -239,6 +249,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     
     function animateSat(satPos){
         let i = 0;
+        
         let thisSat = findObjectByKey(SatList,'satid',satPos.info.satid);
         
         animateSat.clearTimer = clearTimer;
@@ -246,24 +257,37 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         clearMarkers();
         markers = [];
         setMarkers(thisSat);
-        $("#dataAbovebox").html("");
+        $("#dataAbovebox, #satCnt").html("");
         map.setCenter({lat: parseFloat(satPos.positions[i].satlatitude), lng: parseFloat(satPos.positions[i].satlongitude)});
+        if (loopstarted == false){
+            map.setZoom(6);
+        }
         //console.log(satPos.info.satid);
+        
+        loop =  true;
+        loopstarted = true;
         
         var satLoop = setInterval(myTimer, 1000);
 
             function myTimer() {
-                console.log(satPos.positions[i].satlatitude + "/" + satPos.positions[i].satlongitude );
-                
-                curLat = parseFloat(satPos.positions[i].satlatitude);
-                curLng = parseFloat(satPos.positions[i].satlongitude);
-                map.setCenter({lat: curLat, lng: curLng});
-                markers[0].setPosition({lat: curLat, lng: curLng});
+                //console.log(satPos.positions[i].satlatitude + "/" + satPos.positions[i].satlongitude );
+                if (loop == true){
+                    curLat = parseFloat(satPos.positions[i].satlatitude);
+                    curLng = parseFloat(satPos.positions[i].satlongitude);
+                    map.setCenter({lat: curLat, lng: curLng});
+                    
+                    markers[0].setPosition({lat: curLat, lng: curLng});
+                    }
+                 if (loop == false && loopstarted == true){
+                      clearTimer();
+                      loopstarted = false;
+                    }
                 i++;
-                if (i ==300){
+                if (i == 300){
                     clearTimer();
                     trackSat(satPos.info.satid);
                     i = 0;
+                    loop = false;
                 }
             }
             
@@ -271,12 +295,14 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                 
                 clearInterval(satLoop);
             }
+            
+            
         
         return satLoop;
         
     }
 
-    
+
     
     /* ERROR CHECKING
      *

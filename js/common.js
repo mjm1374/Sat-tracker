@@ -259,6 +259,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         setMarkers(thisSat);
         $("#dataAbovebox, #satCnt").html("");
         map.setCenter({lat: parseFloat(satPos.positions[i].satlatitude), lng: parseFloat(satPos.positions[i].satlongitude)});
+        $("#databox").html("Satellite: " + satPos.info.satname + "");
         if (loopstarted == false){
             map.setZoom(6);
         }
@@ -272,16 +273,20 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
             function myTimer() {
                 //console.log(satPos.positions[i].satlatitude + "/" + satPos.positions[i].satlongitude );
                 if (loop == true){
-                    curLat = parseFloat(satPos.positions[i].satlatitude);
-                    curLng = parseFloat(satPos.positions[i].satlongitude);
-                    map.setCenter({lat: curLat, lng: curLng});
-                    
-                    markers[0].setPosition({lat: curLat, lng: curLng});
+                        curLat = parseFloat(satPos.positions[i].satlatitude);
+                        curLng = parseFloat(satPos.positions[i].satlongitude);
+                        
+                        $('#searchLat').val(curLat);
+                        $('#searchLng').val(curLng);
+                        map.setCenter({lat: curLat, lng: curLng});
+                        markers[0].setPosition({lat: curLat, lng: curLng});
                     }
+                    
                  if (loop == false && loopstarted == true){
                       clearTimer();
                       loopstarted = false;
                     }
+                    
                 i++;
                 if (i == 300){
                     clearTimer();

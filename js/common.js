@@ -116,14 +116,14 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         testLat  = isLatitude(parseFloat(sLat.value));
         testLng  = isLatitude(parseFloat(sLat.value));
         
-        console.log(isLatitude(parseFloat(sLat.value)));
+        //console.log(isLatitude(parseFloat(sLat.value)));
         
         if(testLatint == false ) {errmsg = errmsg + "Lat must be a number <br />";}
         if(testLngint == false ) {errmsg = errmsg + "Lng must be a number <br />";}
         if(testLat == false ) {errmsg = errmsg + "Lat must be a value between -90 &amp; 90 <br />";}
         if(testLng == false ) {errmsg = errmsg + "Lng must be a  value between -180 &amp; 180 <br />";}
         
-        console.log("errmsg: " + errmsg  + sLng.value + "/" + testLat);
+        //console.log("errmsg: " + errmsg  + sLng.value + "/" + testLat);
         
         if (errmsg != ""){
             //lets send the erro messages
@@ -137,7 +137,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
             
         //Lets get some data
         
-            
+            map.setCenter({lat:parseFloat(sLat.value), lng:parseFloat(sLng.value) });
             let data = "apiKey=" +  apiKey; 
             
             let theJson =  $.ajax({
@@ -208,10 +208,9 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     }
     
     function setMarkers(thisSat){
-            //
-            if(this.hasOwnProperty()){
-                
-               marker = new google.maps.Marker({
+            
+                console.log("v: "  + thisSat.satid); 
+                var marker = new google.maps.Marker({
                 record_id: thisSat.satid,
                 position: {lat: parseFloat(thisSat.satlat), lng: parseFloat(thisSat.satlng)},
                 map: map,
@@ -231,22 +230,14 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
             var infowindow = new google.maps.InfoWindow({
                 content: infocontent
               });
-            google.maps.event.addListener(marker, 'click', function() {
+            
+            marker.addListener('click', function() {
                 infowindow.open(map, marker);
               });
-            
-            
-                
-      
-                                          
+
             console.log("setMarkers: " + thisSat.satid);
-            markers.push(marker);
-            
-         
-             
-             
-                    
-        }
+            //markers.push(marker);
+
 
     }
     
@@ -273,10 +264,8 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         var resultObject = findObjectByKey(SatList,'satid',searchsatid);
         //console.log(resultObject);
         map.setCenter({lat: parseFloat(resultObject.satlat), lng: parseFloat(resultObject.satlng)});
-       // google.maps.event.trigger(map.marker, 'click');
-        //changeMarker(resultObject.satid);
-        //google.maps.event.trigger(map.markers.marker[key], 'click');
-         $('#databox').text('Satellite: ' + resultObject.satname);
+        
+        $('#databox').text('Satellite: ' + resultObject.satname);
     }
 
     // look through and array of object and do match on obj value

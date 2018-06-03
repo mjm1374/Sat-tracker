@@ -4,10 +4,14 @@
  *
  * based of the N2YO API
  * https://www.n2yo.com/api/#above
+ *
+ * Addiotnal Data from UCS
+ * https://www.ucsusa.org/nuclear-weapons/space-weapons/satellite-database
+ *
  */
 
 const apiKey = "6MVMLK-EJ3FXU-BTVB3F-3TNQ";
-const GMAP = "AIzaSyDpn5_1gAS4SJOuzvkeMZK22yOlvZY2kKE";
+//const GMAP = "AIzaSyDpn5_1gAS4SJOuzvkeMZK22yOlvZY2kKE";
 const satURL = "https://www.n2yo.com/rest/v1/satellite/";
 
 
@@ -20,6 +24,10 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     //var sType = e.options[e.selectedIndex].value;
     let SatList = [];
     let markers = [];
+    
+    console.log("UCS: " + SatDataExt[1].Users);
+    console.log("UCS: " + SatDataExt[1][ 'Country/Org of UN Registry' ]);
+    
     
      //Constructor function for Satelite objects
     function Satelite( id, satname,intDesignator = "",launchDate = "" ,satlat = "",satlng = "", satalt = "") {
@@ -75,8 +83,8 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
             url: satURL + "tle/" + id ,
             data: data,
             success: function (data) {
-                console.log(data);
-                console.log(data.info.satname);
+                //console.log(data);
+                //console.log(data.info.satname);
                 return (Satelite(data.info.satid,data.info.satname));
               },
             dataType: 'json'
@@ -264,6 +272,21 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         return null;
     }
     
+       function addSatInfo(satid){
+       // console.log("UCS: " + SatDataExt[1][ 'Country/Org of UN Registry' ]);
+       console.log("addInfo: " +  satid);
+       for (var i = 0; i < SatDataExt.length; i++) {
+        
+           //console.log("UCSR: " + SatDataExt[i][ 'COSPAR' ] + " = " + satid);
+            if(SatDataExt[i][ 'NORAD Number' ] === satid) {
+                
+                 console.log("addInfo: " +  i);
+                 return SatDataExt[i];
+            }
+        }
+       
+        console.log("addInfoResult: " + findObjectByKey(SatDataExt,'COSPAR',satid));
+    }
     /* Set up for localization
      *
      * getLocation - uses browser build in position module
@@ -324,7 +347,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         
     }
     
-    
+ 
     
     /* GMAP
      *
@@ -367,11 +390,13 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
       });
          
          infocontent = "<b>" + thisSat.satname + "</b>" +
+         "<br/>Satid: " + thisSat.satid +
           "<br/>Intl Des: " + thisSat.intDesignator +
           "<br/>Launched: " + formatDate(thisSat.launchDate) +
           "<br/>Lat: " + thisSat.satlat +
           "<br/>Lng: " + thisSat.satlng +
-          "<br/>Alt: " + thisSat.satalt + "km"
+          "<br/>Alt: " + thisSat.satalt + "km" +
+          "<br/><a href='javascript:addSatInfo(" + thisSat.satid + ")'>Additonal info</a> "
           ;
       
       var infowindow = new google.maps.InfoWindow({

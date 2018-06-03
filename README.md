@@ -9,7 +9,7 @@ Mike McAllister - [mjm1374](https://github.com/mjm1374)
 * [Bootstrap](https://getbootstrap.com/) - The css framework used
 * [SASS](https://sass-lang.com/guide) - CSS Preprocessing
 * [jQuery](https://jquery.com/) - JS Framework
-* [jQuery](https://www.n2yo.com/api/) - Satellite data Rest API
+* [N2YO](https://www.n2yo.com/api/) - Satellite data Rest API
 
 ## Authors
 Mike McAllister - Initial work - [mjm1374](https://github.com/mjm1374)
@@ -21,3 +21,4 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 ## 
 * N2YO.com for the data
 * Eadin & Kaelen for allowing me to show off for them.
+* UCS (Union of Concerned Scientist) for extra data [UCS](https://www.ucsusa.org/nuclear-weapons/space-weapons/satellite-database#.WxNk5lMvwWo)

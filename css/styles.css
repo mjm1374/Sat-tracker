@@ -115,6 +115,14 @@ footer {
   color: #545556;
   padding: 10px; }
 
+#addWriter {
+  display: none; }
+
+.simple-popup-content {
+  color: #000 !important;
+  font-size: .75em;
+  overflow-x: scroll; }
+
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
   header p {
     width: 30%; } }

@@ -294,7 +294,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         
         let addWriter = "";
         addWriter = 
-        "Official Name: " +         addDetail["Current Official Name of Satellite"] + "<br />" +
+        "<h2>" +         addDetail["Current Official Name of Satellite"] + "</h2>" +
 		"UN Registry: " +           addDetail["Country/Org of UN Registry"] + "<br />" +
 		"Country: " +               addDetail["Country of Operator/Owner"] + "<br />"  +
 		"Operator/Owner: " +        addDetail["Operator/Owner"] + "<br />" +
@@ -323,7 +323,10 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
 		"Comments: " +              addDetail["Comments"] + "<br />"
         ;
         
-        alert(addWriter);
+        //alert(addWriter);
+        $('#addInfo').html(addWriter);
+         $('#addInfo').css("display","none");
+        $(this).simplePopup({ type: "html", htmlSelector: "#addInfo" });
         
         
     }

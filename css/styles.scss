@@ -157,6 +157,15 @@ footer {
 }
 
 
+#addWriter{
+display:none;
+}
+.simple-popup-content{
+	color: #000 !important;
+	font-size: .75em;
+	overflow-x: scroll;
+}
+
 //  Media Queries
 
 @media (max-width: 1350px) {}

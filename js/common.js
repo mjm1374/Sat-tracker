@@ -29,8 +29,8 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     console.log("UCS: " + SatDataExt[1][ 'Country/Org of UN Registry' ]);
     console.log("UCS: " + SatDataExt[1][ 'NORAD Number' ]);
     
-    addSatInfo('41556');
-    
+    //addSatInfo('41556');
+   // trackSat('41556');
     
      //Constructor function for Satelite objects
     function Satelite( id, satname,intDesignator = "",launchDate = "" ,satlat = "",satlng = "", satalt = "") {
@@ -110,6 +110,10 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         // Request: /above/{observer_lat}/{observer_lng}/{observer_alt}/{search_radius}/{category_id}
         //sType = document.getElementById("searchtype").value;
         $(".errorDisplay").css("display","none");
+        
+        if(typeof satLoop !== 'undefined'){
+           clearInterval(satLoop);
+        }
        
         let sType = e.options[e.selectedIndex].value;
         let errmsg = ""; 
@@ -211,6 +215,66 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
 
     }
     
+    /* Track a Sateltie for x sec
+     *
+     *
+     */
+    
+    function trackSat(satid){
+        //Request: /positions/{id}/{observer_lat}/{observer_lng}/{observer_alt}/{seconds}
+        let data = "apiKey=" +  apiKey; 
+            
+        let theJson =  $.ajax({
+                url: satURL + "positions/"+ satid + "/" + sLat.value + "/" + sLng.value + "/0/300/",
+                data: data,
+                success: function (data) {
+                    //do something
+                    //console.log(data.positions);
+                    animateSat(data);
+                }
+        });
+        
+        
+    }
+    
+    function animateSat(satPos){
+        let i = 0;
+        let thisSat = findObjectByKey(SatList,'satid',satPos.info.satid);
+        
+        animateSat.clearTimer = clearTimer;
+        
+        clearMarkers();
+        markers = [];
+        setMarkers(thisSat);
+        $("#dataAbovebox").html("");
+        map.setCenter({lat: parseFloat(satPos.positions[i].satlatitude), lng: parseFloat(satPos.positions[i].satlongitude)});
+        //console.log(satPos.info.satid);
+        
+        var satLoop = setInterval(myTimer, 1000);
+
+            function myTimer() {
+                console.log(satPos.positions[i].satlatitude + "/" + satPos.positions[i].satlongitude );
+                
+                curLat = parseFloat(satPos.positions[i].satlatitude);
+                curLng = parseFloat(satPos.positions[i].satlongitude);
+                map.setCenter({lat: curLat, lng: curLng});
+                markers[0].setPosition({lat: curLat, lng: curLng});
+                i++;
+                if (i ==300){
+                    clearTimer();
+                    trackSat(satPos.info.satid);
+                    i = 0;
+                }
+            }
+            
+            function clearTimer(){
+                
+                clearInterval(satLoop);
+            }
+        
+        return satLoop;
+        
+    }
 
     
     
@@ -277,13 +341,13 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     
        function addSatInfo(satid){
        // console.log("UCS: " + SatDataExt[1][ 'Country/Org of UN Registry' ]);
-       console.log("addInfo: " +  satid);
+       //console.log("addInfo: " +  satid);
        for (var i = 0; i < SatDataExt.length; i++) {
         
            //console.log("UCSR: " + SatDataExt[i][ 'COSPAR' ] + " = " + satid);
             if(SatDataExt[i][ 'COSPAR Number' ] === satid) {
                 
-                 console.log("addInfoResp: " +  i);
+                 //console.log("addInfoResp: " +  i);
                  showAddDetail(SatDataExt[i]);
                  return SatDataExt[i];
             }
@@ -447,6 +511,9 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
             infocontent =  infocontent + "<br/><a href='javascript:addSatInfo(\x22" + thisSat.intDesignator + "\x22)'>Additonal info</a> " ;
           }
           
+          infocontent =  infocontent + "<br/><a href='javascript:trackSat(\x22" + thisSat.satid + "\x22)'>Track me</a> " ;
+          
+          
          
       
       var infowindow = new google.maps.InfoWindow({
@@ -465,15 +532,12 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     }
     
     function checkaddInfo(satid){
-       // console.log("UCS: " + SatDataExt[1][ 'Country/Org of UN Registry' ]);
-       //console.log("addInfo: " +  satid);
+
        for (var i = 0; i < SatDataExt.length; i++) {
         
            //console.log("UCSR: " + SatDataExt[i][ 'COSPAR' ] + " = " + satid);
             if(SatDataExt[i][ 'COSPAR Number' ] === satid) {
-                
-                 console.log("addInfoResp: " +  i);
-                // showAddDetail(SatDataExt[i]);
+             
                  return true;
             }
         }

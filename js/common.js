@@ -19,6 +19,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     var e = document.getElementById("searchtype");
     //var sType = e.options[e.selectedIndex].value;
     let SatList = [];
+    let markers = [];
     
      //Constructor function for Satelite objects
     function Satelite( id, satname,intDesignator = "",launchDate = "" ,satlat = "",satlng = "", satalt = "") {
@@ -136,6 +137,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
             
         //Lets get some data
         
+            
             let data = "apiKey=" +  apiKey; 
             
             let theJson =  $.ajax({
@@ -147,12 +149,12 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                     
                     $("#satCnt").text("Sat Count: " + data.info.satcount);
                     //call the map  
-                    initMap(sLat.value ,sLng.value );
+                    //initMap(sLat.value ,sLng.value );
                     
                     SatList = [];
-                    var infowindow = new google.maps.InfoWindow();
-                    var marker  = [];
-                    var markers = [];
+                    //var infowindow = new google.maps.InfoWindow();
+                    //var marker  = [];
+                    //var markers = [];
                     let writer = ""; //creates the temp interface
                     for (var key in data.above)
                     {
@@ -170,36 +172,13 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                                                   data.above[key].satalt
                                                   ));
                              
-                            marker = new google.maps.Marker({
-                                record_id: data.above[key].satid,
-                                position: {lat: parseFloat(data.above[key].satlat), lng: parseFloat(data.above[key].satlng)},
-                                map: map,
-                                icon: './img/icons8-satellite-50.png',
-                                title: data.above[key].satname
-                            });
-                            google.maps.event.addListener(marker, 'click', (function(marker, key) {
-                                 
-                            return function() { 
-                              infocontent = "<b>" + data.above[key].satname + "</b>" +
-                              "<br/>Intl Des: " + data.above[key].intDesignator +
-                              "<br/>Launched: " + formatDate(data.above[key].launchDate) +
-                              "<br/>Lat: " + data.above[key].satlat +
-                              "<br/>Lng: " + data.above[key].satlng +
-                              "<br/>Alt: " + data.above[key].satalt + "km"
-                              ;
-                              infowindow.setContent(infocontent);
-                              infowindow.open(map, marker);
-                            }
-                            })(marker,key));
-                            
-                            // Add marker to markers array
-                             markers.push(marker);
+                           
                               //$('.markerClick').on('click', function () {
                               //
                               //      google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
                               //  });
-                                                     
-                                
+                                console.log(data.above[key]);             
+                                setMarkers(data.above[key]);
                         
                        }
                     }
@@ -218,13 +197,57 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                   },
                 dataType: 'json'
               });
-              //call the map  
-              initMap(sLat.value ,sLng.value );
-                 
-            return [SatList];
+             
+           
+             return (SatList);
+             
+            
          }
         
-        
+
+    }
+    
+    function setMarkers(thisSat){
+            //
+            if(this.hasOwnProperty()){
+                
+               marker = new google.maps.Marker({
+                record_id: thisSat.satid,
+                position: {lat: parseFloat(thisSat.satlat), lng: parseFloat(thisSat.satlng)},
+                map: map,
+                icon: './img/icons8-satellite-50.png',
+                title: thisSat.satname
+                
+            });
+               
+               infocontent = "<b>" + thisSat.satname + "</b>" +
+                "<br/>Intl Des: " + thisSat.intDesignator +
+                "<br/>Launched: " + formatDate(thisSat.launchDate) +
+                "<br/>Lat: " + thisSat.satlat +
+                "<br/>Lng: " + thisSat.satlng +
+                "<br/>Alt: " + thisSat.satalt + "km"
+                ;
+            
+            var infowindow = new google.maps.InfoWindow({
+                content: infocontent
+              });
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map, marker);
+              });
+            
+            
+                
+      
+                                          
+            console.log("setMarkers: " + thisSat.satid);
+            markers.push(marker);
+            
+         
+             
+             
+                    
+        }
+
     }
     
     
@@ -290,7 +313,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         currentLng = position.coords.longitude;
         currentAlt = position.coords.altitude;
         console.log(currentLat, currentLng, currentAlt);
-        x.innerHTML =  "Lat: " + currentLat + "<br/>Lng: " + currentLng + "<br/>Alt: " + currentAlt;
+        x.innerHTML =  "Your current coordinates: <br />Lat: " + currentLat + "<br/>Lng: " + currentLng + "<br/>Alt: " + currentAlt;
         
         sLat.value = position.coords.latitude;
         sLng.value = position.coords.longitude;
@@ -298,6 +321,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         sButton.disabled = false;
         
         findSatAbove();
+        
         
         return setLocation(currentLat,currentLng,currentAlt);
         
@@ -321,7 +345,19 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
           center: {lat: parseFloat(newLat), lng: parseFloat(newLng)},
           zoom: 5
         });
+        //map.addListener('dragend', function() {
+        //    
+        //    newCenter =  map.getCenter();
+        //    $("#searchLat").val(newCenter.lat());
+        //    $("#searchLng").val(newCenter.lng());
+        //    console.log("xxx: " + newCenter.lat());
+        //    findSatAbove();
+        //
+        //
+        // });
       }
+      
+      
       
       function formatDate(thisDate){
         var year = thisDate.substr(0, 4);

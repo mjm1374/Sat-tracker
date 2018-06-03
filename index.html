@@ -31,7 +31,7 @@
 <body>
   <header>
     <h1 class="headerh1">JS Satellite Tracker</h1>
-    <p>A simple project to track satellites I decided to do to show my son what can be done with just javascript. </p>
+    <p>A simple project to track satellites I decided to do to show my son what can be done with just javascript. <br />V1.1 </p>
   </header>
     <nav></nav>
     
@@ -43,19 +43,19 @@
       
       <div class="flexer sidebar">
         
-        Your current coordinates. 
+        
     
-        <p id="local" class="TestDataDisplay"></p>
+        <div id="local" class="TestDataDisplay">Your current coordinates: <br /></div>
     
         <p>Find satelites above you.</p>
         
-        <label for="searchLat">Lat:
+        <label for="searchLat" class="lnglat latlabel">Lat:
         <input class="searchbox" type="text" name="searchLat" id="searchLat" data-label="latitude"  value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
         
-        <label for="searchLng">Lng:
+        <label for="searchLng" class="lnglat lnglabel">Lng:
         <input class="searchbox" type="text" name="searchLng" id="searchLng" data-label="longitude"  value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
         
-        <label for="searchtype">Satellite type:
+        <label for="searchtype">Satellite type:<br />
         <select class="searchbox" name="searchtype" id="searchtype" >
           <option value="18">Amateur radio</option>
           <option value="35">Beidou Navigation System</option>
@@ -148,7 +148,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="js/common.js"></script>
     
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpn5_1gAS4SJOuzvkeMZK22yOlvZY2kKE&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnJkzn_D_jeEWtfJTgXHpYvhUpD7XK_8k&callback=initMap"
     async defer></script>
     
     <script>

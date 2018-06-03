@@ -60,7 +60,9 @@ a:hover {
 .container {
   display: flex;
   /* or inline-flex */
-  justify-content: space-between; }
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row; }
 
 .flexer {
   flex-grow: 1; }
@@ -112,3 +114,47 @@ footer {
   font-size: .75em;
   color: #545556;
   padding: 10px; }
+
+@media (max-width: 414px) {
+  header h1 {
+    font-size: 2em; }
+  header p {
+    display: none; }
+  .map {
+    height: 200px !important; }
+  .container {
+    flex-direction: column; }
+  .flexer {
+    flex-grow: 1;
+    flex-wrap: wrap;
+    padding: 0px;
+    font-size: .75em; }
+  .sidebar {
+    flex: 1;
+    padding: 0px;
+    width: 100%;
+    order: 2; }
+  .lnglat {
+    width: 45%;
+    display: inline-block;
+    float: left; }
+  .lnglabel {
+    margin-top: -15px; }
+  .searchbtn {
+    display: inline-block;
+    float: left;
+    margin-right: 10px; }
+  .recenter {
+    display: inline-block;
+    float: left;
+    margin-top: -15px; }
+  .main {
+    flex: 1;
+    width: 100%;
+    order: 1; }
+  #local {
+    display: none; }
+  #searchLng, #searchLat {
+    width: 60%; }
+  #searchLat {
+    margin-left: 5px; } }

@@ -27,6 +27,9 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     
     console.log("UCS: " + SatDataExt[1].Users);
     console.log("UCS: " + SatDataExt[1][ 'Country/Org of UN Registry' ]);
+    console.log("UCS: " + SatDataExt[1][ 'NORAD Number' ]);
+    
+    addSatInfo('41556');
     
     
      //Constructor function for Satelite objects
@@ -278,15 +281,54 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
        for (var i = 0; i < SatDataExt.length; i++) {
         
            //console.log("UCSR: " + SatDataExt[i][ 'COSPAR' ] + " = " + satid);
-            if(SatDataExt[i][ 'NORAD Number' ] === satid) {
+            if(SatDataExt[i][ 'COSPAR Number' ] === satid) {
                 
-                 console.log("addInfo: " +  i);
+                 console.log("addInfoResp: " +  i);
+                 showAddDetail(SatDataExt[i]);
                  return SatDataExt[i];
             }
         }
-       
-        console.log("addInfoResult: " + findObjectByKey(SatDataExt,'COSPAR',satid));
     }
+    
+    function showAddDetail(addDetail){
+        
+        let addWriter = "";
+        addWriter = 
+        "Official Name: " +         addDetail["Current Official Name of Satellite"] + "<br />" +
+		"UN Registry: " +           addDetail["Country/Org of UN Registry"] + "<br />" +
+		"Country: " +               addDetail["Country of Operator/Owner"] + "<br />"  +
+		"Operator/Owner: " +        addDetail["Operator/Owner"] + "<br />" +
+		"Users: " +                 addDetail["Users"] + "<br />" +
+		"Purpose: " +               addDetail["Purpose"] + "<br />" +
+		"Detailed Purpose: " +      addDetail["Detailed Purpose"] + "<br />" +
+		"Class of Orbit: " +        addDetail["Class of Orbit"] + "<br />" +
+		"Type of Orbit: " +         addDetail["Type of Orbit"] + "<br />" +
+		"Longitude of GEO: " +      addDetail["Longitude of GEO (degrees)"] + "&deg;<br />" +
+		"Perigee: " +               addDetail["Perigee (km)"] + " km<br />" +
+		"Apogee: "  +               addDetail["Apogee (km)"] + " km<br />" +
+		"Eccentricity: " +          addDetail["Eccentricity"] + "<br />" +
+		"Inclination: " +           addDetail["Inclination (degrees)"] + "&deg;<br />" +
+		"Period: " +                addDetail["Period (minutes)"] + " minutes<br />" +
+		"Launch Mass: " +           addDetail["Launch Mass (kg.)"] + "kg<br />" +
+		"Dry Mass: " +              addDetail["Dry Mass (kg.)"] + "kg<br />" +
+		"Power: " +                 addDetail["Power (watts)"] + "w<br />" +
+		"Date of Launch: " +        addDetail["Date of Launch"] + "<br />" +
+		"Expected Lifetime: " +     addDetail["Expected Lifetime"] + "<br />" +
+		"Contractor: " +            addDetail["Contractor"] + "<br />" +
+		"Country of Contractor:" +  addDetail["Country of Contractor"] + "<br />" +
+		"Launch Site: " +           addDetail["Launch Site"] + "<br />" +
+		"Launch Vehicle: " +        addDetail["Launch Vehicle"] + "<br />" +
+		"COSPAR Number: " +         addDetail["COSPAR Number"] + "<br />" +
+		"NORAD Number: " +          addDetail["NORAD Number"] + "<br />" +
+		"Comments: " +              addDetail["Comments"] + "<br />"
+        ;
+        
+        alert(addWriter);
+        
+        
+    }
+    
+    
     /* Set up for localization
      *
      * getLocation - uses browser build in position module
@@ -396,7 +438,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
           "<br/>Lat: " + thisSat.satlat +
           "<br/>Lng: " + thisSat.satlng +
           "<br/>Alt: " + thisSat.satalt + "km" +
-          "<br/><a href='javascript:addSatInfo(" + thisSat.satid + ")'>Additonal info</a> "
+          "<br/><a href='javascript:addSatInfo(\x22" + thisSat.intDesignator + "\x22)'>Additonal info</a> "
           ;
       
       var infowindow = new google.maps.InfoWindow({

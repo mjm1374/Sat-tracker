@@ -86,19 +86,12 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         return theJson;
         
     }
-    
-    function isNumber(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-      }
+
       
-    function isLatitude(lat) {
-        return isFinite(lat) && Math.abs(lat) <= 90;
-      }
       
-      function isLongitude(lng) {
-        return isFinite(lng) && Math.abs(lng) <= 180;
-      }
-    /* TODO: catch errors o blank inputs and bad json
+      
+    /* Find All Sats in view
+     * TODO: catch errors on json
      *
      */
      
@@ -136,7 +129,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         {
             
         //Lets get some data
-        
+            deleteMarkers();
             map.setCenter({lat:parseFloat(sLat.value), lng:parseFloat(sLng.value) });
             let data = "apiKey=" +  apiKey; 
             
@@ -177,7 +170,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                               //
                               //      google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
                               //  });
-                                console.log(data.above[key]);             
+                                //console.log(data.above[key]);             
                                 setMarkers(data.above[key]);
                         
                        }
@@ -198,7 +191,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
                 dataType: 'json'
               });
              
-           
+            getmarkercnt();
              return (SatList);
              
             
@@ -207,39 +200,31 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
 
     }
     
-    function setMarkers(thisSat){
-            
-                console.log("v: "  + thisSat.satid); 
-                var marker = new google.maps.Marker({
-                record_id: thisSat.satid,
-                position: {lat: parseFloat(thisSat.satlat), lng: parseFloat(thisSat.satlng)},
-                map: map,
-                icon: './img/icons8-satellite-50.png',
-                title: thisSat.satname
-                
-            });
-               
-               infocontent = "<b>" + thisSat.satname + "</b>" +
-                "<br/>Intl Des: " + thisSat.intDesignator +
-                "<br/>Launched: " + formatDate(thisSat.launchDate) +
-                "<br/>Lat: " + thisSat.satlat +
-                "<br/>Lng: " + thisSat.satlng +
-                "<br/>Alt: " + thisSat.satalt + "km"
-                ;
-            
-            var infowindow = new google.maps.InfoWindow({
-                content: infocontent
-              });
-            
-            marker.addListener('click', function() {
-                infowindow.open(map, marker);
-              });
 
-            console.log("setMarkers: " + thisSat.satid);
-            //markers.push(marker);
-
-
-    }
+    
+    
+    /* ERROR CHECKING
+     *
+     *
+     */
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+      }
+      
+    function isLatitude(lat) {
+        return isFinite(lat) && Math.abs(lat) <= 90;
+      }
+      
+      function isLongitude(lng) {
+        return isFinite(lng) && Math.abs(lng) <= 180;
+      }
+      
+      function getmarkercnt(){
+        console.log("getmarkercnt: " + markers.length);
+      }
+      
+    
+    
     
     
     function changeMarker(record_id){
@@ -329,22 +314,82 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
     
     var map;
       function initMap(newLat, newLng) {
-        console.log('map ' + newLat + "/" + newLng);
+        //console.log('map ' + newLat + "/" + newLng);
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: parseFloat(newLat), lng: parseFloat(newLng)},
           zoom: 5
         });
-        //map.addListener('dragend', function() {
+        map.addListener('dragend', function() {
         //    
-        //    newCenter =  map.getCenter();
-        //    $("#searchLat").val(newCenter.lat());
-        //    $("#searchLng").val(newCenter.lng());
+           newCenter =  map.getCenter();
+            $("#searchLat").val(newCenter.lat());
+            $("#searchLng").val(newCenter.lng());
         //    console.log("xxx: " + newCenter.lat());
-        //    findSatAbove();
+           findSatAbove();
         //
         //
-        // });
+        });
       }
+      
+    function setMarkers(thisSat){
+      
+          //console.log("v: "  + thisSat.satid); 
+          var marker = new google.maps.Marker({
+          record_id: thisSat.satid,
+          position: {lat: parseFloat(thisSat.satlat), lng: parseFloat(thisSat.satlng)},
+          map: map,
+          icon: './img/icons8-satellite-50.png',
+          title: thisSat.satname
+          
+      });
+         
+         infocontent = "<b>" + thisSat.satname + "</b>" +
+          "<br/>Intl Des: " + thisSat.intDesignator +
+          "<br/>Launched: " + formatDate(thisSat.launchDate) +
+          "<br/>Lat: " + thisSat.satlat +
+          "<br/>Lng: " + thisSat.satlng +
+          "<br/>Alt: " + thisSat.satalt + "km"
+          ;
+      
+      var infowindow = new google.maps.InfoWindow({
+          content: infocontent
+        });
+      
+      google.maps.event.addListener(marker,'click', function() {
+          if (infowindow) {
+              infowindow.close();
+          }
+          infowindow.open(map, marker);
+        });
+
+      //console.log("setMarkers: " + thisSat.satid);
+      markers.push(marker);
+
+
+    }
+    
+    // Sets the map on all markers in the array.
+      function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+      }
+
+      // Removes the markers from the map, but keeps them in the array.
+      function clearMarkers() {
+        setMapOnAll(null);
+      }
+
+      // Shows any markers currently in the array.
+      function showMarkers() {
+        setMapOnAll(map);
+      }
+
+      // Deletes all markers in the array by removing references to them.
+      function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+      }     
       
       
       

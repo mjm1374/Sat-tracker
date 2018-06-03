@@ -1,5 +1,4 @@
-$font-stack : Helvetica,
-sans-serif;
+$font-stack : 'Share Tech Mono', monospace;
 $primary-color: #edeeef;
 $dark-gray: #20252d;
 $mid-gray: #545556;
@@ -7,7 +6,7 @@ $dark-green: #1b6d0d;
 $black: #000;
 $white: #fff;
 $lt-blue: #42a1f4;
-$dark-red:#9e1009;
+$dark-red:#9e1009; 
 
 body {
 	font: 100% $font-stack;
@@ -43,7 +42,7 @@ header{
 }
 
 .headerh1{
-   padding-top: 10px;
+   padding-top: 12px;
 }
 
 p {
@@ -180,18 +179,35 @@ footer {
 @media (max-width: 414px) {
   
   header{
+		background: $mid-gray url("../img/satellite.png");
+		background-repeat: no-repeat;
+		background-position: 0px 10px;
+		background-attachment: scroll;
+		background-size: 50px 50px;
+		height:55px;
+		position: fixed;
+    top: 0;
+		z-index:100;
+		
     h1{
-    font-size: 2em;
+    font-size: 1.75em;
+		margin-left:60px;
   }
     
     p{
       display:none;
     }
   }
-  
+	
+	.headerh1{
+   padding-top: 3px;
+}
+  .container {
+		margin-top: 70px;
+	}
   .map
   {
-    height:200px !important;
+    height:250px !important;
   }
   
   .container{
@@ -246,7 +262,6 @@ footer {
     margin-left: 5px;
   }
 }
-
 
 
 

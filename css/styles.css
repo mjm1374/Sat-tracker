@@ -115,6 +115,10 @@ footer {
   color: #545556;
   padding: 10px; }
 
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  header p {
+    width: 30%; } }
+
 @media (max-width: 414px) {
   header h1 {
     font-size: 2em; }

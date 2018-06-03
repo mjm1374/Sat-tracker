@@ -50,10 +50,10 @@
         <p>Find satelites above you.</p>
         
         <label for="searchLat" class="lnglat latlabel">Lat:
-        <input class="searchbox" type="text" name="searchLat" id="searchLat" data-label="latitude"  value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
+        <input class="searchbox" type="text" name="searchLat" id="searchLat" data-label="latitude"  value="40.7128" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
         
         <label for="searchLng" class="lnglat lnglabel">Lng:
-        <input class="searchbox" type="text" name="searchLng" id="searchLng" data-label="longitude"  value="" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
+        <input class="searchbox" type="text" name="searchLng" id="searchLng" data-label="longitude"  value="-74.0060" size="40" maxlength="40"  min="" max="" accept=""/></label><br />
         
         <label for="searchtype">Satellite type:<br />
         <select class="searchbox" name="searchtype" id="searchtype" >
@@ -121,7 +121,7 @@
         </select>
         </label><br />
         
-        <button onclick="findSatAbove();" id="searchAbove" class="searchbtn" disabled=true>Search</button><br />
+        <button onclick="findSatAbove();" id="searchAbove" class="searchbtn" >Search</button><br />
         
         <button onclick="getLocation();" id="resetAbove" class="recenter">Recenter over me</button>
       </div>

@@ -276,12 +276,34 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
 
     function getLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);  
+         
+            navigator.geolocation.getCurrentPosition(showPosition,showError);  
         } else { 
             x.innerHTML = "Geolocation is not supported by this browser.";
+            //console.log("in getloc");
+            //defaultLocal = setLocation();
+            //console.log(defaultLocal.setLat);
         }
     }
     
+    function showError(error) {
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation.";
+             findSatAbove();
+            break;
+          case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable.";
+            break;
+          case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out.";
+            break;
+          case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred.";
+            break;
+        }
+      }
+          
     function showPosition(position) {
         currentLat = position.coords.latitude;
         currentLng = position.coords.longitude;

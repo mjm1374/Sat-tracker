@@ -1,0 +1,251 @@
+body {
+  font: 100% "Share Tech Mono", monospace;
+  color: #edeeef;
+  margin: 0px;
+  font-size: 1em;
+  background-color: #20252d;
+}
+
+header {
+  background: #545556 url("../img/satellite.png");
+  background-repeat: no-repeat;
+  background-position: 0px 10px;
+  background-attachment: scroll;
+  background-size: 100px 100px;
+  height: 110px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 10px;
+}
+
+header h1 {
+  margin-left: 120px;
+}
+
+header p {
+  font-size: .8em;
+  width: 25%;
+  float: right;
+  margin-top: -50px;
+  margin-right: 20px;
+}
+
+.headerh1 {
+  padding-top: 12px;
+}
+
+p {
+  margin-top: 10px;
+}
+
+a {
+  color: #dba811;
+}
+
+a:hover {
+  color: #9e1009;
+  text-decoration: none;
+}
+
+.TestDataDisplay {
+  padding: 10px;
+  border: 1px solid #1b6d0d;
+  width: 100%;
+  display: inline-block;
+  margin-bottom: .5em;
+  clear: both;
+}
+
+.errorDisplay {
+  padding: 10px;
+  border: 1px solid #9e1009;
+  width: 100%;
+  display: none;
+  font-size: .75em;
+}
+
+#dataAbovebox {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.container {
+  display: flex;
+  /* or inline-flex */
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.flexer {
+  flex-grow: 1;
+}
+
+.sidebar {
+  flex: 1;
+  padding: 20px;
+  width: 15%;
+}
+
+.main {
+  flex: 2;
+  width: 50%;
+}
+
+input[type=text] {
+  padding: 5px;
+  border: 1px solid #edeeef;
+  width: 90%;
+}
+
+select {
+  padding: 5px;
+  border: 1px solid #edeeef;
+  width: 80%;
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+button {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+#map {
+  width: 100%;
+  height: 500px;
+  display: inline-block;
+  border: 4px solid #1b6d0d;
+  border-right: 20%;
+}
+
+.gm-style-iw {
+  color: #000;
+}
+
+.searchbtn {
+  color: #fff;
+  background: #1b6d0d;
+}
+
+.recenter {
+  color: #fff;
+  background: #42a1f4;
+}
+
+footer {
+  font-size: .75em;
+  color: #545556;
+  padding: 10px;
+}
+
+#addWriter {
+  display: none;
+}
+
+.simple-popup-content {
+  color: #000 !important;
+  font-size: .75em;
+  overflow-x: scroll;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  header p {
+    width: 30%;
+  }
+}
+
+@media (max-width: 414px) {
+  header {
+    background: #545556 url("../img/satellite.png");
+    background-repeat: no-repeat;
+    background-position: 0px 10px;
+    background-attachment: scroll;
+    background-size: 50px 50px;
+    height: 55px;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+  }
+
+  header h1 {
+    font-size: 1.75em;
+    margin-left: 60px;
+  }
+
+  header p {
+    display: none;
+  }
+
+  .headerh1 {
+    padding-top: 3px;
+  }
+
+  .container {
+    margin-top: 70px;
+  }
+
+  .map {
+    height: 250px !important;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .flexer {
+    flex-grow: 1;
+    flex-wrap: wrap;
+    padding: 0px;
+    font-size: .75em;
+  }
+
+  .sidebar {
+    flex: 1;
+    padding: 0px;
+    width: 100%;
+    order: 2;
+  }
+
+  .lnglat {
+    width: 45%;
+    display: inline-block;
+    float: left;
+  }
+
+  .lnglabel {
+    margin-top: -15px;
+  }
+
+  .searchbtn {
+    display: inline-block;
+    float: left;
+    margin-right: 10px;
+  }
+
+  .recenter {
+    display: inline-block;
+    float: left;
+    margin-top: -15px;
+  }
+
+  .main {
+    flex: 1;
+    width: 100%;
+    order: 1;
+  }
+
+  #local {
+    display: none;
+  }
+
+  #searchLng,
+  #searchLat {
+    width: 60%;
+  }
+
+  #searchLat {
+    margin-left: 5px;
+  }
+}

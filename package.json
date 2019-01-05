@@ -1,6 +1,7 @@
 {
   "name": "sat-tracker",
   "dependencies": {
+    "bootstrap-sass": "^3.4.0",
     "gulp": "3.9.1"
   },
   "devDependencies": {

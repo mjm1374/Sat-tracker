@@ -1,0 +1,28 @@
+{
+  "name": "sat-tracker",
+  "dependencies": {
+    "gulp": "3.9.1"
+  },
+  "devDependencies": {
+    "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify-es": "^1.0.4"
+  },
+  "description": "A simple project to track satellites I decided to do to show my sons what can be done with just javascript.",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjm1374/Sat-tracker.git"
+  },
+  "author": "Mike McAllister",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjm1374/Sat-tracker/issues"
+  },
+  "homepage": "https://github.com/mjm1374/Sat-tracker#readme"
+}

@@ -269,6 +269,25 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         loopstarted = true;
         
         var satLoop = setInterval(myTimer, 1000);
+        
+        var flightPlanCoordinates = [];
+        
+        for (var j = 0; j < 300; j++) 
+            {
+                flightPlanCoordinates.push({lat: parseFloat(satPos.positions[j].satlatitude) , lng: parseFloat(satPos.positions[j].satlongitude) });
+                console.log("c");
+            }
+                    
+        
+        var flightPath = new google.maps.Polyline({
+          path: flightPlanCoordinates,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+
+        flightPath.setMap(map);
 
             function myTimer() {
                 //console.log(satPos.positions[i].satlatitude + "/" + satPos.positions[i].satlongitude );
@@ -479,7 +498,7 @@ const satURL = "https://www.n2yo.com/rest/v1/satellite/";
         sLng.value = position.coords.longitude;
         initMap(currentLat ,currentLng ); // init gmap
         sButton.disabled = false;
-        
+        loop = false;
         findSatAbove();
         
         

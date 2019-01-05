@@ -4,10 +4,13 @@
     "gulp": "3.9.1"
   },
   "devDependencies": {
+    "gulp-autoprefixer": "^6.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-cssnano": "^2.1.3",
     "gulp-sass": "^4.0.2",
-    "gulp-uglify-es": "^1.0.4"
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify-es": "^1.0.4",
+    "sassdoc": "^2.5.1"
   },
   "description": "A simple project to track satellites I decided to do to show my sons what can be done with just javascript.",
   "version": "1.0.0",

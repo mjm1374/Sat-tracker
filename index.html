@@ -171,25 +171,21 @@
         $(document).ready(function() {
             //var mySat = JSON.parse(findSatTLE(25544));
             //setTimeout(function(){ alert(mySat.satname); }, 3000);
-            var local = getLocation();
+            let local = getLocation();
             
-           let year =  (new Date()).getFullYear();
-           $('.copyright').text(year);
-            
-           
+            let year =  (new Date()).getFullYear();
+            $('.copyright').text(year);
             
             $(function(){
                 findSatTLE(24901).done(function(json) {
-                    // do something with json
-                    //alert(json.info.satname);
-                    $('#databox').text('Satellite: ' + json.info.satname);
+                  
+                    if(json.error == 'undefined'){
+                      $('#databox').text('Satellite: ' + json.info.satname);
+                    }
+                    
                 });
             
             });
-            
-            
-             
-           
         });
         
     </script>

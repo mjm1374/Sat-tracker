@@ -93,7 +93,12 @@ function findSatTLE(id) {
         success: function (data) {
             //console.log(data);
             //console.log(data.info.satname);
-            return (Satelite(data.info.satid, data.info.satname));
+            //console.log(data.error);
+            if (data.error == 'undefined') {
+                return (Satelite(data.info.satid, data.info.satname));
+            }else{
+                alert('API Offline');
+            }
         },
         dataType: 'json'
     });
@@ -172,8 +177,11 @@ function findSatAbove() {
             success: function (data) {
 
                 //var obj = JSON.parse(data);
+                //console.log(data);
+                let satCnt = 0;
+                if (data.error == 'undefined') satCnt = data.info.satcount;
 
-                $("#satCnt").text("Sat Count: " + data.info.satcount);
+                $("#satCnt").text("Sat Count: " + satCnt);
                 //call the map  
                 //initMap(sLat.value ,sLng.value );
 
@@ -526,7 +534,7 @@ function showPosition(position) {
     findSatAbove();
 
 
-    return setLocation(currentLat, currentLng, currentAlt);
+    return thisLocation = new setLocation(currentLat, currentLng, currentAlt);
 
 }
 

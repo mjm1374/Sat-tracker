@@ -97,7 +97,9 @@ function findSatTLE(id) {
             if (data.error == 'undefined') {
                 return (Satelite(data.info.satid, data.info.satname));
             }else{
-                alert('API Offline');
+                errmsg = 'N2YO API Offline';
+                $(".errorDisplay").css("display", "inline-block");
+                $(".errormsg").html(errmsg);
             }
         },
         dataType: 'json'
@@ -179,7 +181,13 @@ function findSatAbove() {
                 //var obj = JSON.parse(data);
                 //console.log(data);
                 let satCnt = 0;
-                if (data.error == 'undefined') satCnt = data.info.satcount;
+                if (data.error == 'undefined') {
+                    satCnt = data.info.satcount;
+                }else{
+                    let errmsg = "N2YO API Offline";
+                    $(".errorDisplay").css("display", "inline-block");
+                    $(".errormsg").html(errmsg);
+                }
 
                 $("#satCnt").text("Sat Count: " + satCnt);
                 //call the map  

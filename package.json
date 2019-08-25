@@ -2,7 +2,9 @@
   "name": "sat-tracker",
   "dependencies": {
     "bootstrap-sass": "^3.4.0",
-    "gulp": "3.9.1"
+    "browserify": "^16.2.3",
+    "gulp": "3.9.1",
+    "vue": "^2.5.21"
   },
   "devDependencies": {
     "gulp-autoprefixer": "^6.0.0",

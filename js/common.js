@@ -1,6 +1,6 @@
-/* Satelite search scripts by Mike McAllister
+/* Satelite search scripts V2.0 by Mike McAllister
  * mike@logikbox.com
- * 5/31/2018
+ * 1/4/2019
  *
  * based of the N2YO API
  * https://www.n2yo.com/api/#above
@@ -37,36 +37,35 @@ console.log("UCS: " + SatDataExt[1]['NORAD Number']);
 
 //addSatInfo('41556');
 // trackSat('41556');
-
 //Constructor function for Satelite objects
-function Satelite(id, satname, intDesignator = "", launchDate = "", satlat = "", satlng = "", satalt = "") {
-    this.satid = id;
-    this.satname = satname;
-    this.intDesignator = intDesignator;
-    this.launchDate = launchDate;
-    this.satlat = satlat;
-    this.satlng = satlng;
-    this.satalt = satalt;
-
-    this.changeName = function (name) {
-        this.satname = name;
-    };
-    this.SatDesignation = function () {
-        return this.satname + " (" + this.id + ")";
-
-    };
-
+class Satelite {
+    constructor(id, satname, intDesignator = "", launchDate = "", satlat = "", satlng = "", satalt = "") {
+        this.satid = id;
+        this.satname = satname;
+        this.intDesignator = intDesignator;
+        this.launchDate = launchDate;
+        this.satlat = satlat;
+        this.satlng = satlng;
+        this.satalt = satalt;
+        this.changeName = function (name) {
+            this.satname = name;
+        };
+        this.SatDesignation = function () {
+            return this.satname + " (" + this.id + ")";
+        };
+    }
 }
 
 /*Constructor function for current location
  *
  * Defaults to Philly, cause Philly rules!
  */
-
-function setLocation(lat = '40.079', lng = '-75.160', alt = '0') {
-    this.setLat = lat;
-    this.setLng = lng;
-    this.setAlt = alt;
+class setLocation {
+    constructor(lat = '40.079', lng = '-75.160', alt = '0') {
+        this.setLat = lat;
+        this.setLng = lng;
+        this.setAlt = alt;
+    }
 }
 
 
